@@ -1,4 +1,5 @@
 import Koa from 'koa'
+import runConfig from './config/index'
 const app = new Koa();
 
 app.use((ctx)=>{
@@ -6,5 +7,5 @@ app.use((ctx)=>{
 });
 
 app.listen(3000,()=>{
-    console.log(`http://localhost:3000 已启动`)
+    console.log(`http://${runConfig.url}:${runConfig.port} 已启动`)
 })
