@@ -1,5 +1,5 @@
-# koa-node back end project
-package include koa pm2 routing-controllers ...
+# koa-node back end project ( Ongoing update )
+package include, koa, pm2, routing-controllers  ...
 
 
 ### npm install
@@ -10,4 +10,3 @@ package include koa pm2 routing-controllers ...
 
 
 
-Ongoing update
