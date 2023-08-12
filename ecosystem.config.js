@@ -8,7 +8,7 @@ module.exports = {
       NODE_ENV: 'uat',
     },
     env_prod: {
-      PORT: 443,
+      PORT: 8001,
       HOST: "localhost",
       NODE_ENV: 'prod',
     },
