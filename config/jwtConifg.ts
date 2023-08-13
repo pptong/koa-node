@@ -7,10 +7,7 @@ type JwtConfig = {
 const development: JwtConfig = {
     jwtSecret: 'koa-node-pptong-dev',
     jwtWhileList: [
-        /\/v1\/oauth2\/authorize/,
-        /\/v1\/oauth2\/token/,
-        /\/oauth2\/auth/,
-        /\/user\/login/,
+        /\/auth\/login/,
         /docs/,
     ],
 }

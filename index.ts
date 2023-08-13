@@ -1,6 +1,6 @@
 import Koa from 'koa'
 import {RunConfig,JwtConfig} from './config/index'
-import { useKoaServer } from 'routing-controllers';
+import { useKoaServer,Action } from 'routing-controllers';
 import controllers from './controller/index';
 import jwt from 'koa-jwt';
 import 'reflect-metadata'
@@ -23,6 +23,13 @@ app.use(
 
 useKoaServer(app, {
   controllers: controllers, 
+  authorizationChecker: async (action: Action, roles?: string[]) => {
+    // perform queries based on token from request headers
+    // const token = action.request.headers["authorization"];
+    // return database.findUserByToken(token).roles.in(roles);
+    return true;
+  },
+
 });
 
 
