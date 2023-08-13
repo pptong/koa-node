@@ -1,7 +1,8 @@
 import Koa from 'koa'
-import runConfig from './config/index'
-import { useKoaServer  } from 'routing-controllers';
+import {RunConfig,JwtConfig} from './config/index'
+import { useKoaServer } from 'routing-controllers';
 import controllers from './controller/index';
+import jwt from 'koa-jwt';
 import 'reflect-metadata'
 
 const app = new Koa()
@@ -11,14 +12,23 @@ const app = new Koa()
 // });
 
 
-useKoaServer (app, {
-    controllers: controllers, // 配置(控制器，校验器等)
-  });
+const jwtSecret = JwtConfig.jwtSecret
+
+app.use(
+  jwt({secret:  Buffer.from(JwtConfig.jwtSecret) ,
+    debug: true
+  }).unless({ path: JwtConfig.jwtWhileList }) // 以 public 开头的请求地址不使用 jwt 中间件
+);
+
+
+useKoaServer(app, {
+  controllers: controllers, 
+});
 
 
 
-app.listen(runConfig.port,()=>{
-    console.log(`http://${runConfig.host}:${runConfig.port} 已启动`)
+app.listen(runConfig.port, () => {
+  console.log(`http://${runConfig.host}:${runConfig.port} 已启动`)
 })
 
 module.exports = app

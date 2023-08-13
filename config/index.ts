@@ -1,3 +1,5 @@
-import {runConfig} from './run'
+import {RunConfig} from './run'
+import {JwtConfig} from './jwtConifg'
 
-export default runConfig;
+export {RunConfig} ;
+export {JwtConfig} ;
