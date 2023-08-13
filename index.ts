@@ -7,17 +7,11 @@ import 'reflect-metadata'
 
 const app = new Koa()
 
-// app.use((ctx)=>{
-//     ctx.body = 'Hello World';
-// });
-
-
-const jwtSecret = JwtConfig.jwtSecret
-
+//header.Authorization: Bearer <token>
 app.use(
   jwt({secret:  Buffer.from(JwtConfig.jwtSecret) ,
     debug: true
-  }).unless({ path: JwtConfig.jwtWhileList }) // 以 public 开头的请求地址不使用 jwt 中间件
+  }).unless({ path: JwtConfig.jwtWhileList }) 
 );
 
 
@@ -27,6 +21,9 @@ useKoaServer(app, {
     // perform queries based on token from request headers
     // const token = action.request.headers["authorization"];
     // return database.findUserByToken(token).roles.in(roles);
+
+    //there is not authorizationChecker in here , will be rewritten later
+    //by pptong
     return true;
   },
 

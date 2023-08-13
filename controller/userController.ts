@@ -2,9 +2,9 @@ import { Controller, Param, Body, Get, Post, Put, Delete } from 'routing-control
 import { userDto } from '../dto/userDto';
 //import { loginDto } from '../dto/loginDto';
 
-@Controller('/User')
+@Controller('/user')
 export default class UserController {
-    @Post('/getUsers')
+    @Post('/getusers')
     public GetUser(@Body() userDto: userDto) {
         return  `My name is ${userDto.userName},my id is ${userDto.userId}`
     } 
