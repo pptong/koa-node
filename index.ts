@@ -27,8 +27,8 @@ useKoaServer(app, {
 
 
 
-app.listen(runConfig.port, () => {
-  console.log(`http://${runConfig.host}:${runConfig.port} 已启动`)
+app.listen(RunConfig.port, () => {
+  console.log(`http://${RunConfig.host}:${RunConfig.port} 已启动`)
 })
 
 module.exports = app

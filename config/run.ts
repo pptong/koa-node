@@ -17,7 +17,7 @@ const production: RunConfig = {
 
 
 
-export const runConfig = {
+export const RunConfig = {
     development: development,
     production: production,
 }[process.env.NODE_ENV === 'development' ? 'development' : 'production'] || development;
