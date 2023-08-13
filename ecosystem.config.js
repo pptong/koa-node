@@ -5,11 +5,13 @@ module.exports = {
     env_uat: {
       PORT: 80,
       HOST: "localhost",
+      JWTSECRET: 'koa-node-pptong-uat',
       NODE_ENV: 'uat',
     },
     env_prod: {
       PORT: 8001,
       HOST: "localhost",
+      JWTSECRET: 'koa-node-pptong-prod',
       NODE_ENV: 'prod',
     },
   }],
