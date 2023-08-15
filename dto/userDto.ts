@@ -1,10 +1,9 @@
-import { Expose,Exclude } from 'class-transformer'
+import { Expose, Exclude } from 'class-transformer'
+import BaseDto from './baseDto';
 
 @Exclude()
-export default class UserDto {
-    @Expose()
-    public id?: number;
-
+export default class UserDto extends BaseDto {
+    
     @Expose()
     public username?: String;
 

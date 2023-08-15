@@ -13,6 +13,7 @@ const development: dbConfig = {
     username: 'pptong',
     password: 'pptong',
     dialect: 'mysql'
+
 }
 
 // config from pm2 config.js

@@ -29,7 +29,7 @@ const userModel = {
 // });
 
 
-const UserModel=sequelize.define('User',{...baseModel,...userModel},{
+const UserModel=sequelize.define('User',{...userModel,...baseModel},{
   freezeTableName: true
 })
 

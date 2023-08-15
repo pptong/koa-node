@@ -11,7 +11,12 @@ export default class UserController {
 
 
     @Post('/getusers')
-    public async GetUser(@Body() userDto: UserDto) {
+    public async GetUsers(@Body() userDto: UserDto) {
         return await this.userService.getUsers(userDto);
+    } 
+
+    @Post('/getuser')
+    public async GetUser(@Body() userDto: UserDto) {
+        return await this.userService.getUser(userDto);
     } 
 }

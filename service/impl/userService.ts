@@ -7,7 +7,8 @@ const userDao = new UserDao();
 
 export default class UserService implements IUserService {
     public async getUsers(userDto: UserDto): Promise<UserDto[]> {
-        const users = await userDao.getUsers({});
+        //const users = await userDao.getUsers({});
+        const users = await userDao.findAll(UserDto);
         //const userDtos  = plainToInstance(UserDto,users);
         return users;
     }
@@ -20,6 +21,12 @@ export default class UserService implements IUserService {
         const user = await userDao.findUser(userDto);
         console.log(user)
         return user != undefined;
+    }
+
+    public async getUser(_userDto: UserDto): Promise<UserDto> {
+        const user = await userDao.findOne(_userDto,UserDto);
+        //const userDtos = plainToInstance(UserDto, users);
+        return user;
     }
 }
 

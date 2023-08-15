@@ -1,14 +1,14 @@
 import UserDto from "../dto/userDto";
 import UserModel from "../models/userModels";
 import { plainToInstance } from 'class-transformer';
-//import baseDto from "./baseDao";
+import BaseDto from "./baseDao";
 import { Model } from "sequelize";
-export default class UserDao {
+export default class UserDao extends BaseDto<Model,UserDto> {
 
-    // constructor()
-    // {
-    //     super(UserModel);
-    // }
+    constructor()
+    {
+        super(UserModel);
+    }
 
     public async getUsers(_userDto: UserDto): Promise<UserDto[]> {
         const users = await UserModel.findAll({ raw: true });
