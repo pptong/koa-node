@@ -3,10 +3,9 @@ import UserModel from "../models/userModels";
 import { plainToInstance } from 'class-transformer';
 import BaseDto from "./baseDao";
 import { Model } from "sequelize";
-export default class UserDao extends BaseDto<Model,UserDto> {
+export default class UserDao extends BaseDto<Model, UserDto> {
 
-    constructor()
-    {
+    constructor() {
         super(UserModel);
     }
 

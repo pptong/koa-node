@@ -1,5 +1,6 @@
 import { Expose } from 'class-transformer';
-export type LoginDto = {
+
+export type LoginDto  = {
     username: string;
     password: string;
 }

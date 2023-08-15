@@ -15,14 +15,13 @@ export default class BaseDao<M extends Model, D extends BaseDto> {
         return dtos;
     }
 
-    public async findOne(dto: D, dtoType: { new(): D }) {
+    public async findOne(dto: D, dtoType: { new(): D }): Promise<D> {
         const wheres: any = { id: dto.id };
         console.log(wheres)
         const data = await this._model.findOne({ where: wheres, raw: true }) || {};
         dto = plainToInstance(dtoType, data);
         return dto
     }
-
 
 }
 
