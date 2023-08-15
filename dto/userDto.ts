@@ -9,4 +9,10 @@ export default class UserDto extends BaseDto {
 
     @Expose()
     public password?: String;
+
+    @Expose()
+    public firstName?:String;
+
+    @Expose()
+    public lastName?:String;
 }

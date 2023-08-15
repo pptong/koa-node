@@ -28,13 +28,13 @@ const userModel = {
 //   modelName: 'User' 
 // });
 
-
-const UserModel=sequelize.define('User',{...userModel,...baseModel},{
+const userField = {...userModel,...baseModel}
+const UserModel=sequelize.define('User',userField,{
   freezeTableName: true
 })
 
 
 UserModel.sync()
 console.log('table [user] is sync')
-
+export const UserField=userField 
 export default UserModel

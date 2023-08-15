@@ -24,7 +24,7 @@ useKoaServer(app, {
   //cors: true,
   controllers: controllers, 
   middlewares: Handler,
-  defaultErrorHandler: false,
+  defaultErrorHandler: true,
   authorizationChecker: async (action: Action, roles?: string[]) => {
     // perform queries based on token from request headers
     // const token = action.request.headers["authorization"];

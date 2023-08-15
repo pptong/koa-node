@@ -8,16 +8,12 @@ type dbConfig = {
 
 // dev config
 const development: dbConfig = {
-    // host: '127.0.0.1',
-    // database: 'pptong',
-    // username: 'pptong',
-    // password: 'pptong',
-    // dialect: 'mysql'
-    host: '1.117.240.203',
-    database: 'tjc',
-    username: 'tjc',
-    password: 'FjyL6jTkD6iTr6zH',
+    host: '127.0.0.1',
+    database: 'pptong',
+    username: 'pptong',
+    password: 'pptong',
     dialect: 'mysql'
+
 }
 
 // config from pm2 config.js

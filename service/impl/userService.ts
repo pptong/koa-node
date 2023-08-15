@@ -24,9 +24,14 @@ export default class UserService implements IUserService {
     }
 
     public async getUser(_userDto: UserDto): Promise<UserDto> {
-        const user = await userDao.findOne(_userDto,UserDto);
+        const user = await userDao.findById(_userDto, UserDto);
         //const userDtos = plainToInstance(UserDto, users);
         return user;
+    }
+
+    public async createUser(_userDto: UserDto): Promise<boolean> {
+        const user = await userDao.create(_userDto);
+        return true
     }
 }
 

@@ -1,0 +1,15 @@
+import MenuDto from '../dto/menuDto'
+import { MenuFiled } from '../models/menuModels';
+import MenuModel from '../models/menuModels'
+import { plainToInstance } from 'class-transformer';
+import BaseDto from "./baseDao";
+import { Model } from "sequelize";
+
+export default class MenuDao extends BaseDto<Model, MenuDto> {
+
+    constructor() {
+        super(MenuModel,MenuFiled);
+    }
+
+}
+
