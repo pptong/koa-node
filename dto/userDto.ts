@@ -1,5 +1,5 @@
 import { Expose, Exclude,Type } from 'class-transformer'
-import BaseDto from './baseDto';
+import BaseDto from './public/baseDto';
 import RoleDto from './roleDto';
 
 @Exclude()

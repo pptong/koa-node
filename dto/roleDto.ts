@@ -1,5 +1,5 @@
 import { Expose, Exclude,Type } from 'class-transformer'
-import BaseDto from './baseDto';
+import BaseDto from './public/baseDto';
 import { User } from '../models/user.model';
 import UserDto from './userDto';
 import MenuDto from './menuDto';

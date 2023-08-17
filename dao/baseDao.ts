@@ -1,4 +1,4 @@
-import BaseDto from '../dto/baseDto';
+import BaseDto from '../dto/public/baseDto';
 import { Model, ModelStatic, Op } from 'sequelize';
 import { plainToInstance } from 'class-transformer';
 import CurrentUser from '../utils/currentUser';
@@ -14,7 +14,6 @@ export default class BaseDao<M extends Model, D extends BaseDto> {
 
     }
 
-    // select * from table
     public async findAll(): Promise<D[]> {
         const datas = await this._model.findAll({ raw: true });
         let dtos = new Array<D>;
@@ -22,7 +21,6 @@ export default class BaseDao<M extends Model, D extends BaseDto> {
         return dtos;
     }
 
-    // select * from table where id = { dto.id }
     public async findById(_id: Number): Promise<D> {
         const wheres: any = { id: _id };
         //console.log(wheres)
@@ -32,13 +30,11 @@ export default class BaseDao<M extends Model, D extends BaseDto> {
     }
 
 
-    // select * from table where id in { _ids }
     public async findByIds(_ids: Array<Number>): Promise<D[]> {
         let wheres: any = [];
         for (let i = 0; i < _ids.length; i++) {
             wheres.push({ id: _ids[i] });
         }
-        //console.log(wheres)
         const datas = await this._model.findAll({ where: wheres, raw: true });
         let dtos = new Array<D>;
         dtos = plainToInstance(this._dtoType, datas);
@@ -49,7 +45,6 @@ export default class BaseDao<M extends Model, D extends BaseDto> {
 
 
 
-    // delete from table where id = { dto.id }
     public async deleteById(_id: Number): Promise<boolean> {
         const wheres: any = { id: _id };
         await this._model.destroy({ where: wheres }) || {};
@@ -84,7 +79,6 @@ export default class BaseDao<M extends Model, D extends BaseDto> {
             cObj.updatedBy = CurrentUser.getCurrentUser().username;
             cObjs.push(cObj);
         }
-        //console.log(cObjs)
         await this._model.bulkCreate(cObjs);
         return true
     }

@@ -24,7 +24,6 @@ export default class ErrorHandler implements KoaMiddlewareInterface {
                 context.body = reponse;
                 context.status = 200
             }
-            //return Promise.resolve()
         })
     }
 }

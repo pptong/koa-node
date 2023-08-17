@@ -24,7 +24,6 @@ export default class SessionHandler implements KoaMiddlewareInterface {
             }
             middleReturn = next()
         });
-        //console.log(3);
         return middleReturn;
 
     }

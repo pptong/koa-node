@@ -1,5 +1,5 @@
 import { Expose, Exclude } from 'class-transformer'
-import BaseDto from './baseDto';
+import BaseDto from './public/baseDto';
 
 @Exclude()
 export default class UserRoleDto extends BaseDto {

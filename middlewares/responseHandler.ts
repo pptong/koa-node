@@ -1,13 +1,11 @@
 
-import { Middleware,KoaMiddlewareInterface } from 'routing-controllers';
+import { Middleware, KoaMiddlewareInterface } from 'routing-controllers';
 import { ResponseReturn } from './public/responseReturn';
 
 @Middleware({ type: 'after' })
 export default class ResponseHandler implements KoaMiddlewareInterface {
     use(context: any, next: (err?: any) => Promise<any>): Promise<any> {
-       
-        
-        //("response.Handler.started")
+
         if (!context.result) {
             const reponse: ResponseReturn = {
                 code: 200,
@@ -15,10 +13,9 @@ export default class ResponseHandler implements KoaMiddlewareInterface {
                 msg: context.msg || 'Success',
             };
             context.type = 'json'
-            //console.log(reponse);
             context.body = reponse;
             next()
         }
         return Promise.resolve()
     }
-  }
+}
