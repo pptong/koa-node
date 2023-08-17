@@ -13,7 +13,7 @@ const sequelize = new Sequelize({
   models: Models, 
 });
 
-console.log(sequelize.config)
+//console.log(sequelize.config)
 
 
 export default sequelize;

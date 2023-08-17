@@ -1,10 +1,9 @@
 import UserRoleDto from '../dto/userRoleDto';
 import BaseDto from "./baseDao";
 import { Model } from "sequelize";
-import {UserRole} from '../models/userRoleModels';
+import {UserRole} from '../models/userRole.model';
 import { plainToInstance } from 'class-transformer';
 
-import { User } from '../models/userModels';
 
 export default class UserRoleDao extends BaseDto<Model, UserRoleDto> {
     constructor() {

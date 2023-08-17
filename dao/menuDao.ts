@@ -1,5 +1,5 @@
 import MenuDto from '../dto/menuDto'
-import {Menu} from '../models/menuModels'
+import { Menu } from '../models/menu.model'
 import { plainToInstance } from 'class-transformer';
 import BaseDto from "./baseDao";
 import { Model } from "sequelize";

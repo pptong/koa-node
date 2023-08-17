@@ -1,7 +1,7 @@
-import { User } from "./userModels";
-import { Role } from "./roleModels";
-import { UserRole } from "./userRoleModels";
-import { Menu } from "./menuModels";
-import { MenuPermission } from "./menuPermissionModels";
+import { User } from "./user.model";
+import { Role } from "./role.model";
+import { UserRole } from "./userRole.model";
+import { Menu } from "./menu.model";
+import { MenuPermission } from "./menuPermission.model";
 
 export const Models = [User, Role, UserRole, Menu, MenuPermission]

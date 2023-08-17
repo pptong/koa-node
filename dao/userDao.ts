@@ -1,5 +1,5 @@
 import UserDto from "../dto/userDto";
-import {User} from "../models/userModels";
+import {User} from "../models/user.model";
 //import { UserField } from "../models/userModels";
 import { plainToInstance } from 'class-transformer';
 import BaseDto from "./baseDao";
