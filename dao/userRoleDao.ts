@@ -10,15 +10,15 @@ export default class UserRoleDao extends BaseDto<Model, UserRoleDto> {
         super(UserRole);
     }
 
-    public async getUserRolesByUserId(userId: Number): Promise<Array<UserRoleDto>> {
-        const userRoles = await UserRole.findAll({ where: { userId: userId }, raw: true })
+    public async getUserRolesByUsername(_username: string): Promise<Array<UserRoleDto>> {
+        const userRoles = await UserRole.findAll({ where: { username: _username }, raw: true })
         const userRoleDtos = plainToInstance(UserRoleDto, userRoles);
         return userRoleDtos;
     }
 
 
-    public async getUserRolesByRoleId(roleId: Number): Promise<Array<UserRoleDto>> {
-        const userRoles = await UserRole.findAll({ where: { roleId: roleId }, raw: true })
+    public async getUserRolesByRoleCode(_roleCode: string): Promise<Array<UserRoleDto>> {
+        const userRoles = await UserRole.findAll({ where: { roleCode: _roleCode }, raw: true })
         const userRoleDtos = plainToInstance(UserRoleDto, userRoles);
         return userRoleDtos;
     }

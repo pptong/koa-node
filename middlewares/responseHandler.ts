@@ -7,7 +7,7 @@ export default class ResponseHandler implements KoaMiddlewareInterface {
     use(context: any, next: (err?: any) => Promise<any>): Promise<any> {
        
         
-        console.log("response.Handler.started")
+        //("response.Handler.started")
         if (!context.result) {
             const reponse: ResponseReturn = {
                 code: 200,
@@ -15,7 +15,7 @@ export default class ResponseHandler implements KoaMiddlewareInterface {
                 msg: context.msg || 'Success',
             };
             context.type = 'json'
-            console.log(reponse);
+            //console.log(reponse);
             context.body = reponse;
             next()
         }

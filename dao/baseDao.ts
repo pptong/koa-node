@@ -66,11 +66,10 @@ export default class BaseDao<M extends Model, D extends BaseDto> {
         cObj.createdAt = new Date();
         cObj.updatedAt = new Date();
 
-        cObj.createdBy = CurrentUser.getCurrentUser().id;
-        cObj.updatedBy = CurrentUser.getCurrentUser().id;
-        const result = await this._model.create(cObj) || {};
-
-        return 1;
+        cObj.createdBy = CurrentUser.getCurrentUser().username;
+        cObj.updatedBy = CurrentUser.getCurrentUser().username;
+        const result:any = await this._model.create(cObj) || {};
+        return result.id;
     }
 
     public async batchCreate(dtos: Array<D>): Promise<boolean> {
@@ -79,18 +78,19 @@ export default class BaseDao<M extends Model, D extends BaseDto> {
             let cObj = this.dtoToModel(dtos[i])
             cObj.createdAt = new Date();
             cObj.updatedAt = new Date();
-            cObj.createdBy = CurrentUser.getCurrentUser().id;
-            cObj.updatedBy = CurrentUser.getCurrentUser().id;
+            cObj.createdBy = CurrentUser.getCurrentUser().username;
+            cObj.updatedBy = CurrentUser.getCurrentUser().username;
             cObjs.push(cObj);
         }
-        const result = await this._model.bulkCreate(cObjs) || {};
+        //console.log(cObjs)
+        await this._model.bulkCreate(cObjs);
         return true
     }
 
     public async update(dto: D): Promise<Number> {
         const uObj: any = this.dtoToModel(dto);
         uObj.updatedAt = new Date();
-        uObj.updatedBy = CurrentUser.getCurrentUser().id;
+        uObj.updatedBy = CurrentUser.getCurrentUser().username;
         uObj.id.remove();
         const wheres: any = { id: dto.id }
         await this._model.update(uObj, {
@@ -110,7 +110,7 @@ export default class BaseDao<M extends Model, D extends BaseDto> {
         const attr = this._model.getAttributes()
         let ret: any = {};
         for (let key in dto) {
-            console.log(key)
+            //console.log(key)
             if (dto[key] && attr[key]) {
                 ret[key] = dto[key];
             }

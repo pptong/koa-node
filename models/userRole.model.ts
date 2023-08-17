@@ -7,10 +7,10 @@ import { Table, Column, Model, HasMany } from 'sequelize-typescript';
 @Table
 export class UserRole extends Base {
   @Column
-  roleId!: bigint;
+  roleCode!: string;
 
   @Column
-  UserId!: bigint;
+  username!: string;
 
 }
 

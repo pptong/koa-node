@@ -1,13 +1,26 @@
-import { Expose, Exclude } from 'class-transformer'
+import { Expose, Exclude,Type } from 'class-transformer'
 import BaseDto from './baseDto';
+import { User } from '../models/user.model';
+import UserDto from './userDto';
+import MenuDto from './menuDto';
 
 @Exclude()
 export default class RoleDto extends BaseDto {
     
     @Expose()
-    public roleName?: String;
+    public roleName!: string;
 
     @Expose()
-    public roleDescption?: String;
+    public roleCode!: string;
 
+    @Expose()
+    public roleDescrption?: string;
+
+    @Expose()
+
+    public users?: UserDto[];
+
+    @Expose()
+
+    public menus?:MenuDto[];
 }

@@ -12,7 +12,10 @@ export class Role extends Base {
   roleName!: string;
 
   @Column
-  roleDescption!: string;
+  roleDescrption!: string;
+
+  @Column
+  roleCode!: string;
 
  }
 

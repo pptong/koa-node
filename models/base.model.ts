@@ -14,10 +14,10 @@ export class Base extends Model {
     updatedAt!: Date;
 
     @Column
-    public createdBy!:Number
+    public createdBy!:string
 
     @Column
-    public updatedBy!:Number
+    public updatedBy!:string
 }
 
 

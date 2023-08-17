@@ -6,10 +6,10 @@ export default class BaseDto  {
     public id?: Number;
 
     @Expose()
-    public createBy?:Number
+    public createBy?:string
 
     @Expose()
-    public updateBy?:Number
+    public updateBy?:string
 
     @Expose()
     public createdAt?:Date

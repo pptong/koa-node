@@ -2,12 +2,14 @@ import { Expose, Exclude } from 'class-transformer'
 import BaseDto from './baseDto';
 
 @Exclude()
-export default class menuPermissionDto extends BaseDto {
+export default class MenuPermissionDto extends BaseDto {
     
     @Expose()
-    public menuId?: Number;
+    public menuCode?: String;
 
     @Expose()
-    public roleId?: Number;
+    public roleCode?: String;
+
+    
 
 }

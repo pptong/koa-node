@@ -8,12 +8,12 @@ import { Table, Column, Model, HasMany } from 'sequelize-typescript';
 @Table
 export class MenuPermission extends Base {
   @Column
-  menuId!: bigint;
+  menuCode!: string;
 
   @Column
-  roleId!: bigint;
+  roleCode!: string;
 
-}
+} 
 
 // const menusPermissionModel = {
 //   menuId: {

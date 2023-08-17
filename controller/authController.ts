@@ -18,7 +18,7 @@ export default class AuthController {
         if (!user) {
             throw new Error(ErrorCode.AuthFailed.code)
         }
-        console.log(user)
+        //console.log(user)
         const token = jsonwebtoken.sign({user}, Buffer.from(JwtConfig.jwtSecret), { expiresIn: '3h' })
         return token;
     }

@@ -5,9 +5,9 @@ import BaseDto from './baseDto';
 export default class UserRoleDto extends BaseDto {
     
     @Expose()
-    public roleId?: Number;
+    public roleCode!: string;
 
     @Expose()
-    public userId?: Number;
+    public usernmae!: string;
 
 }

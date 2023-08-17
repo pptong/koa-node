@@ -32,9 +32,9 @@ export default class UserService implements IUserService {
 
     public async getUser(id: Number): Promise<UserDto> {
         const user = await userDao.findById(id, UserDto);
-        const userRoles = await userRoleDao.getUserRolesByUserId(id)
-        const roleIds = userRoles.map(x => x.roleId || -1);
-        const roles = await roleDao.findByIds(roleIds, RoleDto);
+        const userRoles = await userRoleDao.getUserRolesByUsername(user.username)
+        const roleCodes = userRoles.map(x => x.roleCode);
+        const roles = await roleDao.getRolesByRoleCodes(roleCodes);
         user.roles = roles;
         return user;
     }
@@ -49,8 +49,8 @@ export default class UserService implements IUserService {
             const roles = _userDto.roles || []
             for (let i = 0; i < roles.length; i++) {
                 const userRoleDto = new UserRoleDto();
-                userRoleDto.roleId = roles[i].id;
-                userRoleDto.userId = userId;
+                userRoleDto.roleCode = roles[i].roleCode;
+                userRoleDto.usernmae = _userDto.username;
                 userRoleDtos.push(userRoleDto)
             }
             await userRoleDao.batchCreate(userRoleDtos)
@@ -62,24 +62,24 @@ export default class UserService implements IUserService {
 
     public async updateUser(_userDto: UserDto): Promise<boolean> {
 
-        const dbUserRolesDto = await userRoleDao.getUserRolesByUserId(_userDto.id || -1);
-        const dbUserRoleIds = dbUserRolesDto.map(x => x.id || -1);
+        const dbUserRolesDto = await userRoleDao.getUserRolesByUsername(_userDto.username);
+        //const dbUserRoleIds = dbUserRolesDto.map(x => x.id);
+        const dbUserRoleCodes = dbUserRolesDto.map(x => x.roleCode);
         const currentRoles = _userDto.roles || []
-        const currentRoleIds = currentRoles.map(x => x.id || -1);
-        const deleteUserRoleIds = dbUserRoleIds.filter(x => !currentRoleIds.includes(x));
-        const insertUserRoleIds = currentRoleIds.filter(x => !dbUserRoleIds.includes(x));
-
-
+        const currentRoleCodes = currentRoles.map(x => x.roleCode);
+        const insertUserRoleCodes = currentRoleCodes.filter(x => !currentRoleCodes.includes(x));
         let insertUserRoleDtos: Array<UserRoleDto> = [];
-        for (let i = 0; i < insertUserRoleIds.length; i++) {
+        for (let i = 0; i < insertUserRoleCodes.length; i++) {
             const userRoleDto = new UserRoleDto();
-            userRoleDto.roleId = insertUserRoleIds[i];
-            userRoleDto.userId = _userDto.id;
+            userRoleDto.roleCode = insertUserRoleCodes[i];
+            userRoleDto.usernmae = _userDto.username;
             insertUserRoleDtos.push(userRoleDto)
         }
 
+
+        const deleteUserRoleIds = dbUserRolesDto.filter(x => !currentRoleCodes.includes(x.roleCode)).map(x => x.id || -1);
+
         sequelize.transaction(async (t) => {
-            //namespace.get('transaction') === t1; // true
             await userDao.update(_userDto);
             await userRoleDao.batchCreate(insertUserRoleDtos)
             await userRoleDao.deleteByIds(deleteUserRoleIds);

@@ -19,6 +19,7 @@ export class User extends Base {
 
   @Column
   lastName!: string;
+
 }
 
 

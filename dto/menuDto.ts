@@ -16,4 +16,7 @@ export default class MenuDto extends BaseDto {
     @Expose()
     public path?:String;
 
+    @Expose()
+    public code?:String;
+
 }

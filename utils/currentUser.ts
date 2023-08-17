@@ -3,7 +3,7 @@ export default class CurrentUser {
         const getNamespace = require('cls-hooked').getNamespace;
         const session = getNamespace('my_session');
         const currentUser = JSON.parse(session.get("current_user"));
-        console.log(currentUser)
+        //console.log(currentUser)
         return currentUser.user;
     }
 }

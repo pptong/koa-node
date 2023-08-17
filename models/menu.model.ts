@@ -18,6 +18,9 @@ export class Menu extends Base {
 
   @Column
   path!: string;
+
+
+  
 }
 
 

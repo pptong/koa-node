@@ -10,7 +10,7 @@ import RoleService from '../service/impl/roleService';
 export default class UserController {
 
     userService: IUserService = new UserService();
-    roleService: IRoleService = new RoleService();
+
 
     @Post('/getusers')
     public async GetUsers(@Body() userDto: UserDto) {
@@ -19,14 +19,18 @@ export default class UserController {
 
     @Post('/getuser')
     public async GetUser(@Body() userDto: UserDto) {
-
         let user = await this.userService.getUser(userDto.id || -1);
-
         return user;
     }
 
     @Post('/createUser')
     public async CreateUser(@Body() userDto: UserDto) {
         return await this.userService.createUser(userDto);
+    }
+
+
+    @Post('/updateUser')
+    public async UpdateUser(@Body() userDto: UserDto) {
+        return await this.userService.updateUser(userDto);
     }
 }
