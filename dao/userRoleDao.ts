@@ -7,7 +7,7 @@ import { plainToInstance } from 'class-transformer';
 
 export default class UserRoleDao extends BaseDto<Model, UserRoleDto> {
     constructor() {
-        super(UserRole);
+        super(UserRole,UserRoleDto);
     }
 
     public async getUserRolesByUsername(_username: string): Promise<Array<UserRoleDto>> {

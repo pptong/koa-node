@@ -5,7 +5,7 @@ import { MenuPermission } from '../models/menuPermission.model';
 
 export default class MenuPermissionDao extends BaseDto<Model, MenuPermissionDto> {
     constructor() {
-        super(MenuPermission);
+        super(MenuPermission,MenuPermissionDto);
     }
 }
 

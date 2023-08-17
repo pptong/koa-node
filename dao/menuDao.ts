@@ -6,7 +6,7 @@ import { Model } from "sequelize";
 
 export default class MenuDao extends BaseDto<Model, MenuDto> {
     constructor() {
-        super(Menu);
+        super(Menu,MenuDto);
     }
 }
 

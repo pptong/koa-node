@@ -7,7 +7,7 @@ import { Model, ModelStatic, Op } from 'sequelize';
 export default class RoleDao extends BaseDto<Model, RoleDto> {
 
     constructor() {
-        super(Role);
+        super(Role,RoleDto);
     }
 
     public async getRolesByRoleCodes(_roleCodes: Array<string>): Promise<Array<RoleDto>> {

@@ -6,32 +6,34 @@ import CurrentUser from '../utils/currentUser';
 export default class BaseDao<M extends Model, D extends BaseDto> {
 
     _model: ModelStatic<M>;
+    _dtoType: { new(): D };
 
-    constructor(model: ModelStatic<M>) {
+    constructor(model: ModelStatic<M>, dtoType:{ new(): D }) {
         this._model = model
+        this._dtoType = dtoType
 
     }
 
     // select * from table
-    public async findAll(dtoType: { new(): D }): Promise<D[]> {
+    public async findAll(): Promise<D[]> {
         const datas = await this._model.findAll({ raw: true });
         let dtos = new Array<D>;
-        dtos = plainToInstance(dtoType, datas);
+        dtos = plainToInstance(this._dtoType, datas);
         return dtos;
     }
 
     // select * from table where id = { dto.id }
-    public async findById(_id: Number, dtoType: { new(): D }): Promise<D> {
+    public async findById(_id: Number): Promise<D> {
         const wheres: any = { id: _id };
         //console.log(wheres)
         const data = await this._model.findOne({ where: wheres, raw: true }) || {};
-        const dto = plainToInstance(dtoType, data);
+        const dto = plainToInstance(this._dtoType, data);
         return dto
     }
 
 
     // select * from table where id in { _ids }
-    public async findByIds(_ids: Array<Number>, dtoType: { new(): D }): Promise<D[]> {
+    public async findByIds(_ids: Array<Number>): Promise<D[]> {
         let wheres: any = [];
         for (let i = 0; i < _ids.length; i++) {
             wheres.push({ id: _ids[i] });
@@ -39,7 +41,7 @@ export default class BaseDao<M extends Model, D extends BaseDto> {
         //console.log(wheres)
         const datas = await this._model.findAll({ where: wheres, raw: true });
         let dtos = new Array<D>;
-        dtos = plainToInstance(dtoType, datas);
+        dtos = plainToInstance(this._dtoType, datas);
         return dtos
     }
 
@@ -68,7 +70,7 @@ export default class BaseDao<M extends Model, D extends BaseDto> {
 
         cObj.createdBy = CurrentUser.getCurrentUser().username;
         cObj.updatedBy = CurrentUser.getCurrentUser().username;
-        const result:any = await this._model.create(cObj) || {};
+        const result: any = await this._model.create(cObj) || {};
         return result.id;
     }
 

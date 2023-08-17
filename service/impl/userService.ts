@@ -4,8 +4,6 @@ import { IUserService } from "../userService";
 import UserDao from "../../dao/userDao";
 import RoleDao from "../../dao/roleDao";
 import UserRoleDao from "../../dao/userRoleDao";
-import RoleDto from "../../dto/roleDto";
-import { Sequelize } from "sequelize-typescript";
 import sequelize from "../../sequlize/sequlize";
 import UserRoleDto from "../../dto/userRoleDto";
 
@@ -16,7 +14,7 @@ const userRoleDao = new UserRoleDao();
 export default class UserService implements IUserService {
     public async getUsers(userDto: UserDto): Promise<UserDto[]> {
         //const users = await userDao.getUsers({});
-        const users = await userDao.findAll(UserDto);
+        const users = await userDao.findAll();
         //const userDtos  = plainToInstance(UserDto,users);
         return users;
     }
@@ -31,7 +29,7 @@ export default class UserService implements IUserService {
     }
 
     public async getUser(id: Number): Promise<UserDto> {
-        const user = await userDao.findById(id, UserDto);
+        const user = await userDao.findById(id);
         const userRoles = await userRoleDao.getUserRolesByUsername(user.username)
         const roleCodes = userRoles.map(x => x.roleCode);
         const roles = await roleDao.getRolesByRoleCodes(roleCodes);

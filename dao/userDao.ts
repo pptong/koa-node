@@ -9,7 +9,7 @@ import { Model,Op } from "sequelize";
 export default class UserDao extends BaseDto<Model, UserDto> {
 
     constructor() {
-        super(User);
+        super(User,UserDto);
     }
 
     public async getUsers(_userDto: UserDto): Promise<UserDto[]> {

@@ -16,14 +16,14 @@ const menuPermissionDao = new MenuPermissionDao()
 
 export default class RoleService implements IRoleService {
     public async getRoles(roleDto: RoleDto): Promise<Array<RoleDto>> {
-        const roles = roleDao.findAll(RoleDto);
+        const roles = roleDao.findAll();
         return roles;
     }
 
 
 
     public async getRoleById(roleDto: RoleDto): Promise<RoleDto> {
-        const role = await roleDao.findById(roleDto.id || -1, RoleDto);
+        const role = await roleDao.findById(roleDto.id || -1);
         const userRoles = await userRoleDao.getUserRolesByUsername(roleDto.roleCode)
         const usernames = await userRoles.map(x => x.usernmae);
         const users = await userDao.getUsersByUsernames(usernames);
