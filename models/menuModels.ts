@@ -1,39 +1,58 @@
-import { Sequelize, DataTypes, Model } from 'sequelize';
+import { Sequelize, DataTypes } from 'sequelize';
 import sequelize from '../sequlize/sequlize';
-import baseModel from './baseModels';
+import { Base } from './baseModels';
+import { Table, Column, Model, HasMany } from 'sequelize-typescript';
 
 
-const menuModel = {
-  menuName: {
-    type: DataTypes.STRING,
-    allowNull: false
-  },
+@Table
+export class Menu extends Base {
+  @Column
+  menuName!: string;
 
-  menuCode: {
-    type: DataTypes.STRING,
-    allowNull: false
-  },
+  @Column
+  menuCode!: string;
 
-  parentId: {
-    type: DataTypes.INTEGER,
-    allowNull: false
-  },
 
-  path: {
-    type: DataTypes.STRING,
-    allowNull: false
-  },
+  @Column
+  parentId!: bigint;
+
+  @Column
+  path!: string;
 }
 
-const menuFiled = {...menuModel,...baseModel}
-
-const MenuModel=sequelize.define('Menu',menuFiled,{
-  freezeTableName: true
-})
 
 
-MenuModel.sync()
-console.log('table [menu] is sync')
+// const menuModel = {
+//   menuName: {
+//     type: DataTypes.STRING,
+//     allowNull: false
+//   },
 
-export const MenuFiled = menuFiled;
-export default MenuModel
+//   menuCode: {
+//     type: DataTypes.STRING,
+//     allowNull: false
+//   },
+
+//   parentId: {
+//     type: DataTypes.INTEGER,
+//     allowNull: false
+//   },
+
+//   path: {
+//     type: DataTypes.STRING,
+//     allowNull: false
+//   },
+// }
+
+// const menuFiled = {...menuModel,...baseModel}
+
+// const MenuModel=sequelize.define('Menu',menuFiled,{
+//   freezeTableName: true
+// })s
+
+
+// MenuModel.sync()
+// console.log('table [menu] is sync')
+
+// export const MenuFiled = menuFiled;
+// export default MenuModel

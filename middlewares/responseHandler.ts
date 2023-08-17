@@ -5,6 +5,9 @@ import { ResponseReturn } from './public/responseReturn';
 @Middleware({ type: 'after' })
 export default class ResponseHandler implements KoaMiddlewareInterface {
     use(context: any, next: (err?: any) => Promise<any>): Promise<any> {
+       
+        
+        console.log("response.Handler.started")
         if (!context.result) {
             const reponse: ResponseReturn = {
                 code: 200,
