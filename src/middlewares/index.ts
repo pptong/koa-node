@@ -2,4 +2,5 @@ import ErrorHandler from "./errorHandler";
 import ResponseHandler from "./responseHandler";
 import TransactionHandler from "./transactionHandler";
 import SessionHandler from "./sessionHandler";
-export const Handler=[ErrorHandler,SessionHandler,TransactionHandler,ResponseHandler];
+import LoggerHandler from "./loggerHandler";
+export const Handler=[LoggerHandler,ErrorHandler,SessionHandler,TransactionHandler,ResponseHandler];

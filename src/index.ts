@@ -6,16 +6,22 @@ import jwt from 'koa-jwt';
 import 'reflect-metadata';
 import { Handler } from './middlewares';
 import sequelize from './sequlize/sequlize';
-import { Sequelize } from 'sequelize-typescript';
 
 
 
 
 (async () => {
   const app = new Koa()
-  await sequelize.sync({ alter: true })
 
-  //header.Authorization: Bearer <token>
+  //open table sync in development
+  //This is an unsafe in a production environment
+  if (process.env.NODE_ENV === 'development') {
+    await sequelize.sync({ alter: false })
+  }
+
+
+  //token form request.header.Authorization
+  //the format is Bearer <token>
   app.use(
     jwt({
       secret: Buffer.from(JwtConfig.jwtSecret),
@@ -24,11 +30,13 @@ import { Sequelize } from 'sequelize-typescript';
   );
 
 
+  // routing-controllers
+  // docs  https://github.com/typestack/routing-controllers
   useKoaServer(app, {
     //cors: true,
     controllers: controllers,
     middlewares: Handler,
-    defaultErrorHandler: false ,
+    defaultErrorHandler: false,
     authorizationChecker: async (action: Action, roles?: string[]) => {
       return true;
     },
@@ -40,9 +48,6 @@ import { Sequelize } from 'sequelize-typescript';
   app.listen(RunConfig.port, () => {
     console.log(`http://${RunConfig.host}:${RunConfig.port} is started`)
   })
-
-
-
 })();
 
 

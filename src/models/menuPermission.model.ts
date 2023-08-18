@@ -14,26 +14,3 @@ export class MenuPermission extends Base {
   roleCode!: string;
 
 } 
-
-// const menusPermissionModel = {
-//   menuId: {
-//     type: DataTypes.BIGINT,
-//     allowNull: false
-//   },
-//   roleId: {
-//     type: DataTypes.BIGINT,
-//     allowNull: false
-//   },
-// }
-
-
-// const menusPermissionField = { ...menusPermissionModel, ...baseModel }
-// const MenuPermissionModel = sequelize.define('MenuPermission', menusPermissionField, {
-//   freezeTableName: true
-// })
-
-
-// MenuPermissionModel.sync()
-// console.log('table [menuPermission] is sync')
-// export const MenusPermissionField = menusPermissionField
-// export default MenuPermissionModel

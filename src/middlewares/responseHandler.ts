@@ -5,7 +5,8 @@ import { ResponseReturn } from './public/responseReturn';
 @Middleware({ type: 'after' })
 export default class ResponseHandler implements KoaMiddlewareInterface {
     use(context: any, next: (err?: any) => Promise<any>): Promise<any> {
-
+        //console.log(2);
+        //let middleReturn: any;
         if (!context.result) {
             const reponse: ResponseReturn = {
                 code: 200,
@@ -13,9 +14,8 @@ export default class ResponseHandler implements KoaMiddlewareInterface {
                 msg: context.msg || 'Success',
             };
             context.type = 'json'
-            context.body = reponse;
-            next()
+            context.body = reponse;  
         }
-        return Promise.resolve()
+        return next();
     }
 }

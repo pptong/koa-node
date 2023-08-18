@@ -24,6 +24,7 @@
     "koa": "^2.14.2",
     "koa-bodyparser": "^4.4.1",
     "koa-jwt": "^4.0.4",
+    "log4js": "^6.9.1",
     "mysql2": "^3.6.0",
     "reflect-metadata": "^0.1.13",
     "routing-controllers": "^0.10.4",
