@@ -2,9 +2,9 @@
   "name": "koa-node",
   "version": "0.0.3",
   "description": "",
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
-    "dev": "cross-env NODE_ENV=development nodemon --exec ts-node index.ts",
+    "dev": "cross-env NODE_ENV=development nodemon --exec ts-node src/index.ts",
     "build": "rimraf dist && tsc",
     "serve:uat": "pm2 startOrReload ecosystem.config.js --env uat",
     "serve:prod": "pm2 startOrReload ecosystem.config.js --env prod"
