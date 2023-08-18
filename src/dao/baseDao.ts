@@ -15,6 +15,9 @@ export default class BaseDao<M extends Model, D extends BaseDto> {
 
     }
 
+    /**
+     * Find all data of database table
+     */
     public async findAll(): Promise<D[]> {
         const datas = await this._model.findAll({ raw: true });
         let dtos = new Array<D>;
@@ -22,6 +25,14 @@ export default class BaseDao<M extends Model, D extends BaseDto> {
         return dtos;
     }
 
+
+    /**
+     * Find the data for the specified page
+     * @param pageSize page size {number}
+     * @param pageIndex page index {number}
+     * @param _where  where please see docs of sequelize {any}
+     * @returns bussiness dto {Dto extends BaseDto}
+     */
     public async findAllByPage(pageSize: number, pageIndex: number, _where: any): Promise<D[]> {
         const _pageIndex = pageIndex <= 0 ? 0 : pageIndex;
         const _pageSize = pageSize <= 0 ? 0 : pageSize;
@@ -31,15 +42,23 @@ export default class BaseDao<M extends Model, D extends BaseDto> {
         return dtos;
     }
 
+    /**
+     * Find the data by id
+     * @param _id id {number}
+     * @returns bussiness dto {Dto extends BaseDto}
+     */
     public async findById(_id: Number): Promise<D> {
         const wheres: any = { id: _id };
-        //console.log(wheres)
         const data = await this._model.findOne({ where: wheres, raw: true }) || {};
         const dto = plainToInstance(this._dtoType, data);
         return dto
     }
 
-
+    /**
+     * Find multiple datas by ids
+     * @param _id ids {number[]}
+     * @returns bussiness dto array {Dto extends BaseDto}
+     */
     public async findByIds(_ids: Array<Number>): Promise<D[]> {
         let wheres: any = [];
         for (let i = 0; i < _ids.length; i++) {
@@ -52,24 +71,35 @@ export default class BaseDao<M extends Model, D extends BaseDto> {
     }
 
 
-
-
-
+    /**
+     * delete one data by id
+     * @param _id id {number}
+     * @returns true {boolean}
+     */
     public async deleteById(_id: Number): Promise<boolean> {
         const wheres: any = { id: _id };
         await this._model.destroy({ where: wheres }) || {};
         return true;
     }
 
-
+    /**
+     * delete multiple datas by ids
+     * @param _id ids {number[]}
+     * @returns true {boolean}
+     */
     public async deleteByIds(_ids: Array<Number>): Promise<boolean> {
         const wheres: any = { id: { [Op.or]: _ids } };
         await this._model.destroy({ where: wheres }) || {};
         return true;
     }
 
-    public async create(dto: D): Promise<Number> {
-        const cObj: any = this.dtoToModel(dto);
+    /**
+     * create one data 
+     * @param _id business dto {Dto extends BaseDto }
+     * @returns id {number}
+     */
+    public async create(_dto: D): Promise<Number> {
+        const cObj: any = this.dtoToModel(_dto);
         cObj.createdAt = new Date();
         cObj.updatedAt = new Date();
 
@@ -79,10 +109,16 @@ export default class BaseDao<M extends Model, D extends BaseDto> {
         return result.id;
     }
 
-    public async batchCreate(dtos: Array<D>): Promise<boolean> {
+
+    /**
+     * insert multiple data 
+     * @param _id business dto[] {Dto extends BaseDto }
+     * @returns true {boolean}
+     */
+    public async batchCreate(_dtos: Array<D>): Promise<boolean> {
         let cObjs: any[] = [];
-        for (let i = 0; i < dtos.length; i++) {
-            let cObj = this.dtoToModel(dtos[i])
+        for (let i = 0; i < _dtos.length; i++) {
+            let cObj = this.dtoToModel(_dtos[i])
             cObj.createdAt = new Date();
             cObj.updatedAt = new Date();
             cObj.createdBy = CurrentUser.getCurrentUser().username;
@@ -93,32 +129,36 @@ export default class BaseDao<M extends Model, D extends BaseDto> {
         return true
     }
 
-    public async update(dto: D): Promise<Number> {
-        const uObj: any = this.dtoToModel(dto);
+    /**
+     * update dto data to database table by id 
+     * @param _dto business dto  { Dto extends BaseDto }
+     * @param _id id  {number }
+     * @returns true {boolean}
+     */
+    public async update(_dto: D, _id: number): Promise<boolean> {
+        const uObj: any = this.dtoToModel(_dto);
         uObj.updatedAt = new Date();
         uObj.updatedBy = CurrentUser.getCurrentUser().username;
         uObj.id.remove();
-        const wheres: any = { id: dto.id }
+        const wheres: any = { id: _id }
         await this._model.update(uObj, {
             where: wheres
         });
-        return 1;
+        return true;
     }
 
 
-
-
-
-
-
-
-    private dtoToModel(dto: D): any {
+    /**
+     * dto tranforence to model
+     * @param _dto business dto  { Dto extends BaseDto }
+     * @returns model { any }
+     */
+    private dtoToModel(_dto: D): any {
         const attr = this._model.getAttributes()
         let ret: any = {};
-        for (let key in dto) {
-            //console.log(key)
-            if (dto[key] && attr[key]) {
-                ret[key] = dto[key];
+        for (let key in _dto) {
+            if (_dto[key] && attr[key]) {
+                ret[key] = _dto[key];
             }
         }
         return ret;
