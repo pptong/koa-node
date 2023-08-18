@@ -3,7 +3,7 @@ import { ClassConstructor } from 'class-transformer'
 
 export default class BaseDto  {
     @Expose()
-    public id?: Number;
+    public id?: number;
 
     @Expose()
     public createBy?:string

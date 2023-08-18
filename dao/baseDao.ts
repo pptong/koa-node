@@ -2,13 +2,14 @@ import BaseDto from '../dto/public/baseDto';
 import { Model, ModelStatic, Op } from 'sequelize';
 import { plainToInstance } from 'class-transformer';
 import CurrentUser from '../utils/currentUser';
+import PageDto from '../dto/public/pageDto';
 
 export default class BaseDao<M extends Model, D extends BaseDto> {
 
     _model: ModelStatic<M>;
     _dtoType: { new(): D };
 
-    constructor(model: ModelStatic<M>, dtoType:{ new(): D }) {
+    constructor(model: ModelStatic<M>, dtoType: { new(): D }) {
         this._model = model
         this._dtoType = dtoType
 
@@ -16,6 +17,15 @@ export default class BaseDao<M extends Model, D extends BaseDto> {
 
     public async findAll(): Promise<D[]> {
         const datas = await this._model.findAll({ raw: true });
+        let dtos = new Array<D>;
+        dtos = plainToInstance(this._dtoType, datas);
+        return dtos;
+    }
+
+    public async findAllByPage(pageSize: number, pageIndex: number, _where: any): Promise<D[]> {
+        const _pageIndex = pageIndex <= 0 ? 0 : pageIndex;
+        const _pageSize = pageSize <= 0 ? 0 : pageSize;
+        const datas = await this._model.findAll({ where: _where, offset: (_pageIndex - 1) * _pageSize, limit: _pageSize, raw: true });
         let dtos = new Array<D>;
         dtos = plainToInstance(this._dtoType, datas);
         return dtos;

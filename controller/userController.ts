@@ -4,6 +4,7 @@ import UserService from '../service/impl/userService';
 import { IUserService } from '../service/userService';
 import { IRoleService } from '../service/roleService';
 import RoleService from '../service/impl/roleService';
+import PageDto from '../dto/public/pageDto';
 
 
 @Controller('/user')
@@ -13,8 +14,8 @@ export default class UserController {
 
 
     @Post('/getusers')
-    public async GetUsers(@Body() userDto: UserDto) {
-        return await this.userService.getUsers(userDto);
+    public async GetUsers(@Body() pageDto: PageDto) {
+        return await this.userService.getUsers(pageDto);
     }
 
     @Post('/getuser')
@@ -32,5 +33,10 @@ export default class UserController {
     @Post('/updateUser')
     public async UpdateUser(@Body() userDto: UserDto) {
         return await this.userService.updateUser(userDto);
+    }
+
+    @Post('/deleteUser')
+    public async deleteUser(@Body() userDto: UserDto) {
+        return await this.userService.deleteUser(userDto.id || -1);
     }
 }

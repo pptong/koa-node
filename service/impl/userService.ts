@@ -6,16 +6,18 @@ import RoleDao from "../../dao/roleDao";
 import UserRoleDao from "../../dao/userRoleDao";
 import sequelize from "../../sequlize/sequlize";
 import UserRoleDto from "../../dto/userRoleDto";
+import PageDto from "../../dto/public/pageDto";
 
 const userDao = new UserDao();
 const roleDao = new RoleDao();
 const userRoleDao = new UserRoleDao();
 
 export default class UserService implements IUserService {
-    public async getUsers(userDto: UserDto): Promise<UserDto[]> {
-        //const users = await userDao.getUsers({});
-        const users = await userDao.findAll();
-        //const userDtos  = plainToInstance(UserDto,users);
+
+    public async getUsers(pageDto: PageDto): Promise<UserDto[]> {
+        const users = await userDao.findAllByPage(pageDto.pageSize, pageDto.pageIndex, {
+            username: pageDto.query.username
+        });
         return users;
     }
 
@@ -35,6 +37,12 @@ export default class UserService implements IUserService {
         const roles = await roleDao.getRolesByRoleCodes(roleCodes);
         user.roles = roles;
         return user;
+    }
+
+
+    public async deleteUser(id: Number): Promise<boolean> {
+        const user = await userDao.deleteById(id);
+        return true;
     }
 
 
@@ -78,7 +86,7 @@ export default class UserService implements IUserService {
         const deleteUserRoleIds = dbUserRolesDto.filter(x => !currentRoleCodes.includes(x.roleCode)).map(x => x.id || -1);
 
         sequelize.transaction(async (t) => {
-            await userDao.update(_userDto);
+            await userDao.update(_userDto, _userDto.id || -1);
             await userRoleDao.batchCreate(insertUserRoleDtos)
             await userRoleDao.deleteByIds(deleteUserRoleIds);
         });

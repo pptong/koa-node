@@ -5,10 +5,10 @@ import BaseDto from './public/baseDto';
 export default class MenuPermissionDto extends BaseDto {
     
     @Expose()
-    public menuCode?: String;
+    public menuCode!: string;
 
     @Expose()
-    public roleCode?: String;
+    public roleCode!: string;
 
     
 

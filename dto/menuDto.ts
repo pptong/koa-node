@@ -5,18 +5,18 @@ import BaseDto from './public/baseDto';
 export default class MenuDto extends BaseDto {
     
     @Expose()
-    public menuName?: String;
+    public menuName?: string;
 
     @Expose()
-    public menuCode?: String;
+    public menuCode?: string;
 
     @Expose()
     public parentId?:Number;
     
     @Expose()
-    public path?:String;
+    public path?:string;
 
     @Expose()
-    public code?:String;
+    public code?:string;
 
 }
