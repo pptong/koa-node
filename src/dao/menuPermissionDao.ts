@@ -1,18 +1,11 @@
 import BaseDto from "./baseDao";
-import { Model } from "sequelize";
+import { Model, Op } from "sequelize";
 import MenuPermissionDto from '../dto/menuPermissionDto';
 import { MenuPermission } from '../models/menuPermission.model';
 import { plainToInstance } from "class-transformer";
 
 export default class MenuPermissionDao extends BaseDto<Model, MenuPermissionDto> {
-    constructor() { super(MenuPermission,MenuPermissionDto);}
-
-
-    public async getMenuPermissionsByUsername(_username: string): Promise<Array<MenuPermissionDto>> {
-        const menuPermissions = await MenuPermission.findAll({ where: { username: _username }, raw: true })
-        const menuPermissionDtos = plainToInstance(MenuPermissionDto, menuPermissions);
-        return menuPermissionDtos;
-    }
+    constructor() { super(MenuPermission, MenuPermissionDto); }
 
 
     public async getMenuPermissionsByRoleCode(_roleCode: string): Promise<Array<MenuPermissionDto>> {
@@ -20,5 +13,12 @@ export default class MenuPermissionDao extends BaseDto<Model, MenuPermissionDto>
         const menuPermissionDtos = plainToInstance(MenuPermissionDto, menuPermissions);
         return menuPermissionDtos;
     }
+
+    public async getMenuPermissionsByRoleCodes(_roleCodes: string[]): Promise<Array<MenuPermissionDto>> {
+        const menuPermissions = await MenuPermission.findAll({ where: { roleCode: { [Op.or]: _roleCodes } }, raw: true })
+        const menuPermissionDtos = plainToInstance(MenuPermissionDto, menuPermissions);
+        return menuPermissionDtos;
+    }
 }
+
 

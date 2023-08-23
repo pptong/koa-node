@@ -34,6 +34,7 @@ import sequelize from './sequlize/sequlize';
   // docs  https://github.com/typestack/routing-controllers
   useKoaServer(app, {
     //cors: true,
+    routePrefix: '/api',
     controllers: controllers,
     middlewares: Handler,
     defaultErrorHandler: false,
