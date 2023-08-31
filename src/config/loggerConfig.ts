@@ -3,25 +3,22 @@ export const LoggerConfig = {
         request: {
             type: "dateFile",
             filename: "./logs/reqeust.log",
-            pattern: "-yyyy-MM-dd",
-        },
-        console: {
-            type: "console",
+            pattern: ".yyyyMMdd",
         },
         trace: {
             type: "dateFile",
             filename: "./logs/error.log",
-            pattern: "yyyy-MM-dd",
+            pattern: ".yyyyMMdd",
         },
         error: {
             type: "dateFile",
             filename: "./logs/error.log",
-            pattern: "yyyy-MM-dd",
+            pattern: ".yyyyMMdd",
         }
     },
     categories: {
         default: {
-            appenders: ["console", "trace"],
+            appenders: ["trace"],
             level: "trace"
         },
         error: {

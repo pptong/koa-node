@@ -17,8 +17,12 @@ export class Menu extends Base {
   parentId!: bigint;
 
   @Column
-  path!: string;
+  path?: string;
 
+  @Column
+  component?: string;
 
+  @Column
+  redirect?: string;
   
 }

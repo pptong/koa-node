@@ -19,4 +19,13 @@ export default class MenuDto extends BaseDto {
     @Expose()
     public code?:string;
 
+    @Expose()
+    component?: string;
+  
+    @Expose()
+    redirect?: string;
+
+    @Expose()
+    children?: MenuDto[];
+
 }

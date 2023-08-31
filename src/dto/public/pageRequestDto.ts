@@ -1,7 +1,7 @@
 import { Expose, Exclude } from 'class-transformer'
 
 
-export  default class PageDto {
+export  default class PageRequestDto {
     @Expose()
     query!: { [x: string]: string };
 
@@ -9,5 +9,5 @@ export  default class PageDto {
     pageSize!: number;
 
     @Expose()
-    pageIndex!: number;
+    current!: number;
 }

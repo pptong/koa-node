@@ -11,6 +11,12 @@ export default class RoleDao extends BaseDto<Model, RoleDto> {
     }
 
     public async getRolesByRoleCodes(_roleCodes: Array<string>): Promise<Array<RoleDto>> {
+        
+        if(_roleCodes.length==0) {
+            const user = plainToInstance(RoleDto, []);
+            return user;
+        }
+
         const users = await Role.findAll({
             where: {
                 roleCode: { [Op.or]: _roleCodes }

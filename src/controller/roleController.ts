@@ -18,6 +18,12 @@ export default class RoleController {
         return await this.roleService.createRole(roleDto);
     }
 
+
+    @Post('/getallroles')
+    public async getAllRoles(@Body() roleDto: RoleDto) {
+        return await this.roleService.getAllRoles(roleDto);
+    }
+
     @Post('/updaterole')
     public async updateRole(@Body() roleDto: RoleDto) {
         return await this.roleService.updateRole(roleDto);

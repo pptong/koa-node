@@ -6,7 +6,7 @@ type RunConfig = {
 // dev config
 const development: RunConfig = {
     host: 'localhost',
-    port: 3000,
+    port: 8888,
 }
 
 // config from pm2 config.js

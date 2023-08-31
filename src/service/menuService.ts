@@ -1,7 +1,8 @@
 import MenuDto from "../dto/menuDto";
+import UserDto from "../dto/userDto";
 
 export interface IMenuService
 {
-    getMenus(menuDto:MenuDto):Promise< Array<MenuDto>>;
-    getMenusByRoleId(menuDto:MenuDto):Promise< MenuDto>;
+    getMenusByUser(_userDto:UserDto):Promise< Array<MenuDto>>;
+    //getMenusByRoleId(menuDto:MenuDto):Promise< MenuDto>;
 }

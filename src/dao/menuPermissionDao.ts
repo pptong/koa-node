@@ -15,6 +15,10 @@ export default class MenuPermissionDao extends BaseDto<Model, MenuPermissionDto>
     }
 
     public async getMenuPermissionsByRoleCodes(_roleCodes: string[]): Promise<Array<MenuPermissionDto>> {
+        if(_roleCodes.length==0){
+            const menuPermissionDtos = plainToInstance(MenuPermissionDto, []);
+            return menuPermissionDtos;
+        }
         const menuPermissions = await MenuPermission.findAll({ where: { roleCode: { [Op.or]: _roleCodes } }, raw: true })
         const menuPermissionDtos = plainToInstance(MenuPermissionDto, menuPermissions);
         return menuPermissionDtos;

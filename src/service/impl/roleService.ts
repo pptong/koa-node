@@ -23,11 +23,17 @@ export default class RoleService implements IRoleService {
     }
 
 
+    public async getAllRoles(roleDto: RoleDto): Promise<Array<RoleDto>> {
+        const roles = roleDao.findAll();
+        return roles;
+    }
+
+
 
     public async getRoleById(roleDto: RoleDto): Promise<RoleDto> {
         const role = await roleDao.findById(roleDto.id || -1);
         const userRoles = await userRoleDao.getUserRolesByUsername(roleDto.roleCode)
-        const usernames = await userRoles.map(x => x.usernmae);
+        const usernames = await userRoles.map(x => x.username);
         const users = await userDao.getUsersByUsernames(usernames);
         const menuPermission = await menuPermissionDao.getMenuPermissionsByRoleCode(role.roleCode);
         const menuCodes = menuPermission.map(x => x.menuCode);
@@ -47,11 +53,11 @@ export default class RoleService implements IRoleService {
 
         const dbUserRoles = await userRoleDao.getUserRolesByRoleCode(roleDto.roleCode);
         const dbMenuPermission = await menuPermissionDao.getMenuPermissionsByRoleCode(roleDto.roleCode);
-        const dbUsernames = dbUserRoles.map(x => x.usernmae);
+        const dbUsernames = dbUserRoles.map(x => x.username);
         const dbMenuCodes = dbMenuPermission.map(x => x.menuCode);
 
         //need to delete
-        const deleteUserRoleIds = dbUserRoles.filter(x => !currentUsernames.includes(x.usernmae)).map(x => x.id || -1);
+        const deleteUserRoleIds = dbUserRoles.filter(x => !currentUsernames.includes(x.username)).map(x => x.id || -1);
         const deleteMenuPermissionIds = dbMenuPermission.filter(x => !currentMneuCodes.includes(x.menuCode)).map(x => x.id || -1);
 
         //need to insert
@@ -60,7 +66,7 @@ export default class RoleService implements IRoleService {
         const insertUserRoles = insertUsernames.map(x => {
             let e = new UserRoleDto();
             e.roleCode = roleDto.roleCode;
-            e.usernmae = x
+            e.username = x
             return e;
         });
 
@@ -94,7 +100,7 @@ export default class RoleService implements IRoleService {
         for (let i = 0; i < insertUsernames.length; i++) {
             let userRoleDto = new UserRoleDto();
             userRoleDto.roleCode = roleDto.roleCode;
-            userRoleDto.usernmae = insertUsernames[i];
+            userRoleDto.username = insertUsernames[i];
             userRoleDtos.push(userRoleDto);
         }
 

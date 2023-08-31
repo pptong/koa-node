@@ -23,4 +23,11 @@ export default class UserDto extends BaseDto {
     @Expose()
     public roles?: RoleDto[];
 
+
+    @Expose()
+    name?:string;
+    
+    @Expose()
+    avatar?:string;
+
 }

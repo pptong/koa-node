@@ -20,4 +20,10 @@ export class User extends Base {
   @Column
   lastName!: string;
 
+  @Column
+  name?:string;
+  
+  @Column
+  avatar?:string;
+
 }

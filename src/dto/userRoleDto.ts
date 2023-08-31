@@ -8,6 +8,6 @@ export default class UserRoleDto extends BaseDto {
     public roleCode!: string;
 
     @Expose()
-    public usernmae!: string;
+    public username!: string;
 
 }
