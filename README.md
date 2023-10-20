@@ -4,6 +4,11 @@
 ### 描述
 用 `TypeScript` 做的后端，目前只是构建了基础模块，采用了分层的方式进行开发，方便未来面对项目或者是较大型项目的时候直接拿来使用
 
+### 前端项目
+对应的前端项目请请进入
+https://github.com/pptong/koa-node-front-end
+
+
 
 ### 主要依赖
 后端的基础框架使用的是 `koa` , 除此之外还用到了其他依赖
@@ -25,9 +30,7 @@
 - `class-transformer` https://www.npmjs.com/package/class-transformer
 - `cls-hooked` https://www.npmjs.com/package/cls-hooked
 
-###前端项目
-对应的前端项目请请进入
-https://github.com/pptong/koa-node-front-end
+
 
 ### 项目启动
 
