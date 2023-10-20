@@ -9,6 +9,9 @@ import MenuPermissionDto from "../../dto/menuPermissionDto";
 import MenuPermissionDao from "../../dao/menuPermissionDao";
 import sequelize from "../../sequlize/sequlize";
 import MenuDao from "../../dao/menuDao";
+import PageRequestDto from "../../dto/public/pageRequestDto";
+import PageResponseDto from "../../dto/public/pageResponseDto";
+import { Op } from "sequelize";
 
 const userDao = new UserDao();
 const roleDao = new RoleDao();
@@ -17,10 +20,38 @@ const menuPermissionDao = new MenuPermissionDao();
 const menuDao = new MenuDao();
 
 export default class RoleService implements IRoleService {
-    public async getRoles(roleDto: RoleDto): Promise<Array<RoleDto>> {
-        const roles = roleDao.findAll();
-        return roles;
-    }
+
+
+    public async getRoles(pageDto: PageRequestDto): Promise<PageResponseDto<RoleDto>> {
+        const _where: any = {};
+        // if (pageDto.query) {
+        //   if (pageDto.query.username)
+        //     _where.username = { [Op.substring]: pageDto.query.username };
+        //   if (pageDto.query.firstName)
+        //     _where.firstName = { [Op.substring]: pageDto.query.firstName };
+        //   if (pageDto.query.lastName)
+        //     _where.lastName = { [Op.substring]: pageDto.query.lastName };
+        //   if (pageDto.query.name)
+        //     _where.name = { [Op.substring]: pageDto.query.name };
+        // }
+    
+        const users = await roleDao.findAllByPage(
+          pageDto.pageSize,
+          pageDto.current,
+          _where
+        );
+    
+        const rolesCount = await roleDao.getCount(_where);
+        return new PageResponseDto<RoleDto>(
+          users,
+          pageDto.pageSize,
+          pageDto.current,
+          rolesCount
+        );
+      }
+
+
+
 
 
     public async getAllRoles(roleDto: RoleDto): Promise<Array<RoleDto>> {
@@ -32,9 +63,10 @@ export default class RoleService implements IRoleService {
 
     public async getRoleById(roleDto: RoleDto): Promise<RoleDto> {
         const role = await roleDao.findById(roleDto.id || -1);
-        const userRoles = await userRoleDao.getUserRolesByUsername(roleDto.roleCode)
+        const userRoles = await userRoleDao.getUserRolesByRoleCode(role.roleCode)
         const usernames = await userRoles.map(x => x.username);
         const users = await userDao.getUsersByUsernames(usernames);
+       
         const menuPermission = await menuPermissionDao.getMenuPermissionsByRoleCode(role.roleCode);
         const menuCodes = menuPermission.map(x => x.menuCode);
         const menus = await menuDao.getMenusByMenuCodes(menuCodes)
@@ -47,15 +79,12 @@ export default class RoleService implements IRoleService {
 
 
     public async updateRole(roleDto: RoleDto): Promise<boolean> {
-
         const currentUsernames = roleDto.users?.map(x => x.username || '') || [];
         const currentMneuCodes = roleDto.menus?.map(x => x.menuCode || '') || [];
-
         const dbUserRoles = await userRoleDao.getUserRolesByRoleCode(roleDto.roleCode);
         const dbMenuPermission = await menuPermissionDao.getMenuPermissionsByRoleCode(roleDto.roleCode);
         const dbUsernames = dbUserRoles.map(x => x.username);
         const dbMenuCodes = dbMenuPermission.map(x => x.menuCode);
-
         //need to delete
         const deleteUserRoleIds = dbUserRoles.filter(x => !currentUsernames.includes(x.username)).map(x => x.id || -1);
         const deleteMenuPermissionIds = dbMenuPermission.filter(x => !currentMneuCodes.includes(x.menuCode)).map(x => x.id || -1);
@@ -93,9 +122,9 @@ export default class RoleService implements IRoleService {
 
 
     public async createRole(roleDto: RoleDto): Promise<boolean> {
+
         const insertUsernames = roleDto.users?.map(x => x.username || '') || [];
         const insertMneuCodes = roleDto.menus?.map(x => x.menuCode || '') || [];
-
         let userRoleDtos: Array<UserRoleDto> = [];
         for (let i = 0; i < insertUsernames.length; i++) {
             let userRoleDto = new UserRoleDto();
@@ -115,6 +144,7 @@ export default class RoleService implements IRoleService {
 
 
 
+
         sequelize.transaction(async (t1) => {
             await roleDao.create(roleDto);
             await menuPermissionDao.batchCreate(menuPermissionDtos);
@@ -129,7 +159,7 @@ export default class RoleService implements IRoleService {
     public async deleteRole(roleDto: RoleDto): Promise<boolean> {
         roleDao.deleteById(roleDto.id || -1);
         return true;
-    }
+    } 
 }
 
 

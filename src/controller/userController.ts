@@ -24,18 +24,18 @@ export default class UserController {
         return user;
     }
 
-    @Post('/createUser')
+    @Post('/createuser')
     public async CreateUser(@Body() userDto: UserDto) {
         return await this.userService.createUser(userDto);
     }
 
 
-    @Post('/updateUser')
+    @Post('/updateuser')
     public async UpdateUser(@Body() userDto: UserDto) {
         return await this.userService.updateUser(userDto);
     }
 
-    @Post('/deleteUser')
+    @Post('/deleteuser')
     public async deleteUser(@Body() userDto: UserDto) {
         return await this.userService.deleteUser(userDto.id || -1);
     }

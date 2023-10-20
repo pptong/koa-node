@@ -5,12 +5,22 @@ import { IUserService } from '../service/userService';
 import RoleDto from '../dto/roleDto';
 import { IRoleService } from '../service/roleService';
 import RoleService from '../service/impl/roleService';
+import PageRequestDto from '../dto/public/pageRequestDto';
 
 
 @Controller('/role')
 export default class RoleController {
 
     roleService: IRoleService = new RoleService();
+
+
+
+    @Post('/getroles')
+    public async GetRoles(@Body() pageResquest: PageRequestDto) {
+        return await this.roleService.getRoles(pageResquest);
+    }
+
+
 
 
     @Post('/createrole')

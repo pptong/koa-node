@@ -21,9 +21,17 @@ export default class MenuService implements IMenuService {
     const menuCodes = menuPermission.map((x) => x.menuCode);
     const menu = await menuDao.getMenusByMenuCodes(menuCodes);
     const menuDtos = this.DtoToTree(menu);
-    console.log(JSON.stringify(menuDtos));
     return menuDtos;
   }
+
+
+  public async getAllMenus(): Promise<MenuDto[]> {
+    const menu = await menuDao.findAll();
+    const menuDtos = this.DtoToTree(menu);
+    return menuDtos;
+  }
+
+  
 
   private DtoToTree(menuDto: MenuDto[], parentId: number = 0): MenuDto[] {
     const menus = menuDto.filter((x) => x.parentId == parentId);
@@ -34,3 +42,6 @@ export default class MenuService implements IMenuService {
     return menus;
   }
 }
+
+
+

@@ -11,6 +11,10 @@ export default class MenuDao extends BaseDto<Model, MenuDto> {
 
 
     public async getMenusByMenuCodes(_menuCodes: Array<string>): Promise<Array<MenuDto>> {
+        if(_menuCodes.length==0){
+            const menus = plainToInstance(MenuDto, []);
+            return menus;
+        }
         const menus = await Menu.findAll({
             where: {
                 menuCode: { [Op.or]: _menuCodes }
